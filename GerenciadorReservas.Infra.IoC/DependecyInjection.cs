@@ -1,6 +1,7 @@
 ﻿using GerenciadorReservas.Domain.Interfaces;
 using GerenciadorReservas.Infra.Data.Context;
 using GerenciadorReservas.Infra.Data.Repositories;
+using GerenciadorReservas.Infra.Data.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace GerenciadorReservas.Infra.IoC
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ISalaRepository, SalaRepository>();
             services.AddScoped<IReservaRepository, ReservaRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
