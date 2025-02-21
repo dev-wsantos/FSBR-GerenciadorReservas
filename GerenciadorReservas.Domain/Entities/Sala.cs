@@ -10,6 +10,7 @@ namespace GerenciadorReservas.Domain.Entities
 
         public ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 
+        public Sala() { }
         public Sala(string nome, int capacidade)
         {
             ValidateDomain(nome, capacidade);

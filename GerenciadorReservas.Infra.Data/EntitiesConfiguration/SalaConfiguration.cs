@@ -1,6 +1,7 @@
 ﻿using GerenciadorReservas.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
 {
@@ -8,7 +9,6 @@ namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<Sala> builder)
         {
-           
             builder.HasKey(s => s.Id);
 
             builder.Property(s => s.Id)
@@ -22,7 +22,6 @@ namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
                    .WithOne(r => r.Sala)
                    .HasForeignKey(r => r.SalaId)
                    .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }
