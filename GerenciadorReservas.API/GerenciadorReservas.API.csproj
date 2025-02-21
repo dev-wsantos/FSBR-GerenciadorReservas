@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GerenciadorReservas.Application\GerenciadorReservas.Application.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.Data.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.InfraCrossCutting\GerenciadorReservas.InfraCrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>

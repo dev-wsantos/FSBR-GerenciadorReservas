@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GerenciadorReservas.Application\GerenciadorReservas.Application.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.Domain\GerenciadorReservas.Domain.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>
