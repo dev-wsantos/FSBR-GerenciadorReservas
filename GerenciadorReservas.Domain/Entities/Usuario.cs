@@ -1,4 +1,5 @@
 ﻿using GerenciadorReservas.Domain.Validation;
+using System.Text.RegularExpressions;
 
 namespace GerenciadorReservas.Domain.Entities
 {
@@ -27,13 +28,21 @@ namespace GerenciadorReservas.Domain.Entities
             
             DomainExceptionValidation.When(nome.Length < 5, "Nome inválido. O Nome deve ter no mínimo 5 caracteres");
 
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email), "Email inválido. O Email é obrigatório");
-
-            DomainExceptionValidation.When(email.Length < 10, "Email inválido. O Email deve ter no mínimo 10 caracteres");
+            ValidarEmail(email);
 
             Nome = nome;
 
             Email = email;
+        }
+
+        private void ValidarEmail(string email)
+        {
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email), "O e-mail é obrigatório.");
+
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            bool emailValido = Regex.IsMatch(email, emailPattern);
+
+            DomainExceptionValidation.When(!emailValido, "O e-mail informado é inválido.");
         }
     }
 }

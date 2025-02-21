@@ -31,6 +31,8 @@ namespace GerenciadorReservas.Domain.Entities
             UsuarioId = usuarioId;
             SalaId = salaId;
             DataHora = dataHora;
+           
+            Cancelar();
             Status = StatusReserva.Confirmada;
             
         }
