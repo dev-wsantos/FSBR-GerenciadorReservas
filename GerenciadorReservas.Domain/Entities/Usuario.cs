@@ -12,7 +12,7 @@ namespace GerenciadorReservas.Domain.Entities
         
         public ICollection<Reserva> Reservas { get; set; } = new List<Reserva>();
 
-        public Usuario(string nome, string email)
+        public Usuario(int v, string nome, string email)
         {
             ValidateDomain(nome, email);
         }
@@ -24,25 +24,18 @@ namespace GerenciadorReservas.Domain.Entities
 
         private void ValidateDomain(string nome, string email)
         {
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(nome), "Nome inválido. O Nome é obrigatório");
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(nome), "Nome inválido. O Nome é obrigatório.");
             
-            DomainExceptionValidation.When(nome.Length < 5, "Nome inválido. O Nome deve ter no mínimo 5 caracteres");
+            DomainExceptionValidation.When(nome.Length < 5, "Nome inválido. O Nome deve ter no mínimo 5 caracteres.");
 
-            ValidarEmail(email);
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email), "O e-mail é obrigatório.");
 
+            DomainExceptionValidation.When(!Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"), "O e-mail informado é inválido.");
+
+            
             Nome = nome;
 
             Email = email;
-        }
-
-        private void ValidarEmail(string email)
-        {
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email), "O e-mail é obrigatório.");
-
-            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            bool emailValido = Regex.IsMatch(email, emailPattern);
-
-            DomainExceptionValidation.When(!emailValido, "O e-mail informado é inválido.");
         }
     }
 }

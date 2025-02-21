@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.UI.Web"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.Infra.IoC", "GerenciadorReservas.Infra.IoC\GerenciadorReservas.Infra.IoC.csproj", "{CFE7434F-3D39-4313-830C-1B9DE9BFB0A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.Tests", "GerenciadorReservas.Tests\GerenciadorReservas.Tests.csproj", "{0BBCE0EA-DECD-4BD7-A137-E743614EB8EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{CFE7434F-3D39-4313-830C-1B9DE9BFB0A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFE7434F-3D39-4313-830C-1B9DE9BFB0A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFE7434F-3D39-4313-830C-1B9DE9BFB0A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBCE0EA-DECD-4BD7-A137-E743614EB8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBCE0EA-DECD-4BD7-A137-E743614EB8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBCE0EA-DECD-4BD7-A137-E743614EB8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBCE0EA-DECD-4BD7-A137-E743614EB8EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{A661D05C-30F5-4F44-80DB-FB30C4464072} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{2D5EBB98-7E60-444E-99C2-902D825B9F93} = {8AA0FFC1-DFC1-499E-BB1D-B8DF709725EE}
 		{CFE7434F-3D39-4313-830C-1B9DE9BFB0A3} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{0BBCE0EA-DECD-4BD7-A137-E743614EB8EC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FD720F43-F213-4D94-AD70-8319D5677CCA}
