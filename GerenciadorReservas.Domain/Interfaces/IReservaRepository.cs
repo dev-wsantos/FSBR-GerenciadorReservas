@@ -10,9 +10,9 @@ namespace GerenciadorReservas.Domain.Interfaces
     public interface IReservaRepository
     {
         Task<IEnumerable<Reserva>> GetAllAsync();
-        Task<Reserva> GetByIdAsync(int id);
-        Task AddAsync(Reserva reserva);
-        Task UpdateAsync(Reserva reserva);
-        Task RemoveAsync(Reserva reserva);
+        Task<Reserva> GetByIdAsync(int? id);
+        Task<Reserva> CreateAsync(Reserva reserva);
+        Task<Reserva> UpdateAsync(Reserva reserva);
+        Task<Reserva> RemoveAsync(Reserva reserva);
     }
 }

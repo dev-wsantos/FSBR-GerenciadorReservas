@@ -6,8 +6,8 @@ namespace GerenciadorReservas.Domain.Interfaces
     {
         Task<Sala> GetByIdAsync(int id);
         Task<IEnumerable<Sala>> GetAllAsync();
-        Task AddAsync(Sala sala);
-        Task UpdateAsync(Sala sala);
-        Task RemoveAsync(Sala sala);
+        Task<Sala>CreateAsync(Sala sala);
+        Task<Sala>UpdateAsync(Sala sala);
+        Task<Sala>RemoveAsync(Sala sala);
     }
 }
