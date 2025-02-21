@@ -1,5 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -17,6 +19,19 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+builder.Services.AddCors(o =>
+{
+    o.AddPolicy("PermitirAcessoAplicacaoMVC",
+       policy =>
+       {
+           policy.WithOrigins("https://localhost:7242/")
+                 .AllowAnyMethod()
+                 .AllowAnyHeader();
+       });
+});
+
+app.UseCors("PermitirAcessoAplicacaoMVC");
 
 app.UseAuthorization();
 
