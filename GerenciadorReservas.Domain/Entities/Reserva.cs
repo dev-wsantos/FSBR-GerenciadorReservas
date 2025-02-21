@@ -27,7 +27,8 @@ namespace GerenciadorReservas.Domain.Entities
 
             DomainExceptionValidation.When(dataHora < DateTime.Now, "Não é possível fazer uma reserva para um horário passado.");
 
-            
+            DomainExceptionValidation.When((dataHora - DateTime.Now).TotalHours < 24 && dataHora > DateTime.Now, "Não é possível fazer uma reserva com menos de 24 horas de antecedência.");
+
             UsuarioId = usuarioId;
             SalaId = salaId;
             DataHora = dataHora;
