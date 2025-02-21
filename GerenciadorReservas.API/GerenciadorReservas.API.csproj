@@ -7,13 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GerenciadorReservas.Application\GerenciadorReservas.Application.csproj" />
     <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.Data.csproj" />
-    <ProjectReference Include="..\GerenciadorReservas.InfraCrossCutting\GerenciadorReservas.InfraCrossCutting.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.InfraCrossCutting\GerenciadorReservas.Infra.IoC.csproj" />
   </ItemGroup>
 
 </Project>
