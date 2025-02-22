@@ -19,10 +19,11 @@ namespace GerenciadorReservas.Infra.Data.Repositories
             return await _salaContext.Salas.ToListAsync();
         }
 
-        public async Task<Sala> GetByIdAsync(int id)
+        public async Task<Sala> GetByIdAsync(int? id)
         {
             return await _salaContext.Salas.FindAsync(id);
         }
+
         public async Task<Sala> CreateAsync(Sala sala)
         {
             _salaContext.Add(sala);
@@ -43,5 +44,7 @@ namespace GerenciadorReservas.Infra.Data.Repositories
             await _salaContext.SaveChangesAsync();
             return sala;
         }
+
+        
     }
 }
