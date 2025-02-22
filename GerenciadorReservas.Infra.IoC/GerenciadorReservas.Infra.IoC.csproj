@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GerenciadorReservas.Application\GerenciadorReservas.Application.csproj" />
     <ProjectReference Include="..\GerenciadorReservas.Domain\GerenciadorReservas.Domain.csproj" />
     <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.Data.csproj" />

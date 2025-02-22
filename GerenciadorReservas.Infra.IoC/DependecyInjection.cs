@@ -1,4 +1,7 @@
-﻿using GerenciadorReservas.Domain.Interfaces;
+﻿using GerenciadorReservas.Application.Interfaces;
+using GerenciadorReservas.Application.Mappings;
+using GerenciadorReservas.Application.Services;
+using GerenciadorReservas.Domain.Interfaces;
 using GerenciadorReservas.Infra.Data.Context;
 using GerenciadorReservas.Infra.Data.Repositories;
 using GerenciadorReservas.Infra.Data.UnitOfWork;
@@ -20,7 +23,14 @@ namespace GerenciadorReservas.Infra.IoC
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<ISalaRepository, SalaRepository>();
             services.AddScoped<IReservaRepository, ReservaRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<ISalaService, SalaService>();
+            services.AddScoped<IReservaService, ReservaService>();
+
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 
             return services;
         }
