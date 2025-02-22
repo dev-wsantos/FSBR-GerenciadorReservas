@@ -5,16 +5,28 @@ namespace GerenciadorReservas.Infra.Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext? _context;
-        public IUsuarioRepository UsuarioRepository => throw new NotImplementedException();
+        private readonly ApplicationDbContext _context;
 
-        public ISalaRepository SalaRepository => throw new NotImplementedException();
+        public IUsuarioRepository UsuarioRepository { get; }
+        public ISalaRepository SalaRepository { get; }
 
-        public IReservaRepository ReservaRepository => throw new NotImplementedException();
+        public IReservaRepository ReservaRepository { get; }
+
+        public UnitOfWork(
+            ApplicationDbContext context,
+            IUsuarioRepository usuarioRepository,
+            ISalaRepository salaRepository,
+            IReservaRepository reservaRepository)
+        {
+            _context = context;
+            UsuarioRepository = usuarioRepository;
+            SalaRepository = salaRepository;
+            ReservaRepository = reservaRepository;
+        }
 
         public async Task<int> CommitAsync()
         {
-            return await _context!.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         public void Dispose()
