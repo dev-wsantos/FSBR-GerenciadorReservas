@@ -36,7 +36,7 @@ namespace GerenciadorReservas.Application.Services
 
         public async Task<ReservaDTO> CriarReservaAsync(ReservaDTO reservaDto)
         {
-            var reserva = _reservaFactory.CriarReserva(reservaDto.SalaId, reservaDto.UsuarioId, reservaDto.DataHora);
+            var reserva = _reservaFactory.CriarReserva(reservaDto.SalaId, reservaDto.UsuarioId, reservaDto.DataHoraInicio, reservaDto.DataHoraFim);
 
             await _unitOfWork.ReservaRepository.AdicionarAsync(reserva);
 
@@ -50,7 +50,7 @@ namespace GerenciadorReservas.Application.Services
             if (reservaExistente == null)
                 throw new InvalidOperationException("Reserva não encontrada");
 
-            var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reserva.DataHora);
+            var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reserva.DataHoraInicio, reserva.DataHoraFim);
 
             if (existeConflito)
                 throw new InvalidOperationException("Já existe uma reserva para a sala no mesmo horário");

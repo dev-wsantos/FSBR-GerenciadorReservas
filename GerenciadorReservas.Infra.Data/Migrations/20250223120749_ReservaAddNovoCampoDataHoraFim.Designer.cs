@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GerenciadorReservas.Infra.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250222035209_AddNovoCampoEntityReserva")]
-    partial class AddNovoCampoEntityReserva
+    [Migration("20250223120749_ReservaAddNovoCampoDataHoraFim")]
+    partial class ReservaAddNovoCampoDataHoraFim
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,10 @@ namespace GerenciadorReservas.Infra.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataHora")
+                    b.Property<DateTime>("DataHoraFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataHoraInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("SalaId")

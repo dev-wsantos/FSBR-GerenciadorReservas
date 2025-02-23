@@ -8,21 +8,25 @@ namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
     {
         public void Configure(EntityTypeBuilder<Reserva> builder)
         {
+
             builder.HasKey(r => r.Id);
 
             builder.Property(r => r.Id)
                    .ValueGeneratedOnAdd();
 
-            builder.Property(r => r.DataHora)
+            builder.Property(r => r.DataHoraInicio)
+                   .IsRequired();
+
+            builder.Property(r => r.DataHoraFim)
                    .IsRequired();
 
             builder.Property(r => r.Status)
-                   .HasConversion<int>() // Armazenando o enum como int
+                   .HasConversion<int>() 
                    .IsRequired();
 
             builder.Property(r => r.TokenConfirmacao)
-                     .HasMaxLength(255)
-                     .IsRequired(false);
+                   .HasMaxLength(255)
+                   .IsRequired(false);
 
             // Relacionamento com Sala
             builder.HasOne(r => r.Sala)

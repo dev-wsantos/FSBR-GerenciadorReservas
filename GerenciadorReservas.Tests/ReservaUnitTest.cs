@@ -11,43 +11,43 @@ namespace GerenciadorReservas.Tests
         [Fact]
         public void CriarReserva_ComParametrosValidos_DeveCriarReservaComSucesso()
         {
-            
             int usuarioId = 1;
             int salaId = 1;
-            DateTime dataHora = DateTime.Now.AddHours(25); 
+            DateTime dataHoraInicio = DateTime.Now.AddHours(25);
+            DateTime dataHoraFim = dataHoraInicio.AddHours(2); // Exemplo: duração de 2 horas
 
-            var reserva = new Reserva(usuarioId, salaId, dataHora);
+            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
 
             reserva.UsuarioId.Should().Be(usuarioId);
             reserva.SalaId.Should().Be(salaId);
-            reserva.DataHora.Should().Be(dataHora);
+            reserva.DataHoraInicio.Should().Be(dataHoraInicio);
+            reserva.DataHoraFim.Should().Be(dataHoraFim);
             reserva.Status.Should().Be(StatusReserva.Confirmada);
         }
 
         [Fact]
         public void CriarReserva_ComUsuarioIdInvalido_DeveLancarExcecaoUsuarioIdInvalido()
         {
-           
-            int usuarioId = 0; 
+            int usuarioId = 0;
             int salaId = 1;
-            DateTime dataHora = DateTime.Now.AddHours(24);
+            DateTime dataHoraInicio = DateTime.Now.AddHours(24);
+            DateTime dataHoraFim = dataHoraInicio.AddHours(2);
 
-            Action act = () => new Reserva(usuarioId, salaId, dataHora);
+            Action act = () => new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
 
             act.Should().Throw<DomainExceptionValidation>()
-               .WithMessage("Id do usuário inválido. O Id do usuário deve ser maior que 0");
+               .WithMessage("Usuário inválido. O Usuário é obrigatório.");
         }
 
-       
         [Fact]
         public void CancelarReserva_ComMaisDeVinteQuatroHoras_DeveCancelarReservaComSucesso()
         {
-            
             int usuarioId = 1;
             int salaId = 1;
-            DateTime dataHora = DateTime.Now.AddHours(25);
+            DateTime dataHoraInicio = DateTime.Now.AddHours(25);
+            DateTime dataHoraFim = dataHoraInicio.AddHours(2);
 
-            var reserva = new Reserva(usuarioId, salaId, dataHora);
+            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
 
             reserva.Cancelar();
 
@@ -55,17 +55,20 @@ namespace GerenciadorReservas.Tests
         }
 
         [Fact]
-        public void CancelarReserva_ComMenosDeVinteQuatroHoras_NaoDeveCancelarReservaComMenosDeVinteQuatroHoras()
+        public void CancelarReserva_ComMenosDeVinteQuatroHoras_DeveLancarExcecao()
         {
-
             int usuarioId = 1;
             int salaId = 1;
-            DateTime dataHora = DateTime.Now.AddHours(23);
+            DateTime dataHoraInicio = DateTime.Now.AddHours(23); // Menos de 24h de antecedência
+            DateTime dataHoraFim = dataHoraInicio.AddHours(2);
 
-            Action act = () => new Reserva(usuarioId, salaId, dataHora);
+            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+
+            Action act = () => reserva.Cancelar();
 
             act.Should().Throw<DomainExceptionValidation>()
-               .WithMessage("Não é possível fazer uma reserva com menos de 24 horas de antecedência.");
+               .WithMessage("Não é possível cancelar a reserva com menos de 24 horas de antecedência.");
         }
+
     }
 }

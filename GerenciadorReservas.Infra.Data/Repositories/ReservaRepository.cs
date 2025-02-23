@@ -51,7 +51,11 @@ namespace GerenciadorReservas.Infra.Data.Repositories
         public async Task<List<Reserva>> ObterReservasPorDataAsync(DateTime data)
         {
             return await _reservaContext.Reservas
-                .Where(r => r.DataHora.Date == data.Date)
+                .Where(r =>
+                    r.DataHoraInicio.Date == data.Date ||  
+                    r.DataHoraFim.Date == data.Date ||    
+                    (r.DataHoraInicio < data && r.DataHoraFim > data) 
+                )
                 .ToListAsync();
         }
 
@@ -60,40 +64,52 @@ namespace GerenciadorReservas.Infra.Data.Repositories
             return await _reservaContext.Reservas
                 .Include(r => r.Sala)
                 .Include(r => r.Usuario)
-                .Where(r => r.SalaId == salaId && r.DataHora.Date == data.Date)
+                .Where(r =>
+                    r.SalaId == salaId &&
+                    (r.DataHoraInicio.Date == data.Date ||
+                     r.DataHoraFim.Date == data.Date ||
+                     (r.DataHoraInicio < data && r.DataHoraFim > data))
+                )
                 .ToListAsync();
         }
 
         public async Task<List<Reserva>> ObterReservasPorUsuarioAsync(int usuarioId)
         {
             return await _reservaContext.Reservas
-                    .Include(r => r.Usuario)
-                    .Include(r => r.Sala)
-                    .Where(r => r.UsuarioId == usuarioId)
-                    .ToListAsync();
+                .Include(r => r.Usuario)
+                .Include(r => r.Sala)
+                .Where(r => r.UsuarioId == usuarioId)
+                .ToListAsync();
         }
 
         public async Task<List<Reserva>> ObterTodasReservasAsync()
         {
             var reservas = await _reservaContext.Reservas
-                    .Include(r => r.Usuario)
-                    .Include(r => r.Sala)
-                    .AsNoTracking()
-                    .ToListAsync();
+                .Include(r => r.Usuario)
+                .Include(r => r.Sala)
+                .AsNoTracking()
+                .ToListAsync();
 
             reservas.ForEach(r =>
             {
-                r.Usuario?.Reservas?.Clear(); // Limpa a referência cíclica se houver
-                r.Sala?.Reservas?.Clear();    
+                r.Usuario?.Reservas?.Clear();
+                r.Sala?.Reservas?.Clear();
             });
 
             return reservas ?? new List<Reserva>();
         }
 
-        public async Task<bool> VerificarConflitoReservaAsync(int salaId, DateTime dataHoraReserva)
+
+        public async Task<bool> VerificarConflitoReservaAsync(int salaId, DateTime dataHoraInicio, DateTime dataHoraFim)
         {
-            return await _reservaContext.Reservas
-                  .AnyAsync(r => r.SalaId == salaId && r.DataHora == dataHoraReserva);
+            return await _reservaContext.Reservas.AnyAsync(r =>
+                r.SalaId == salaId &&
+               ((dataHoraInicio >= r.DataHoraInicio && dataHoraInicio < r.DataHoraFim) || 
+                (dataHoraFim > r.DataHoraInicio && dataHoraFim <= r.DataHoraFim) ||      
+                (dataHoraInicio <= r.DataHoraInicio && dataHoraFim >= r.DataHoraFim))    
+            );
         }
+
+        
     }
 }

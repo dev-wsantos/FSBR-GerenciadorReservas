@@ -30,7 +30,10 @@ namespace GerenciadorReservas.Infra.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataHora")
+                    b.Property<DateTime>("DataHoraFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataHoraInicio")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("SalaId")

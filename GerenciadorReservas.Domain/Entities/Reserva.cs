@@ -9,7 +9,8 @@ namespace GerenciadorReservas.Domain.Entities
         public Usuario? Usuario { get; private set; }
         public int SalaId { get; private set; }
         public Sala? Sala { get; private set; }
-        public DateTime DataHora { get; private set; }
+        public DateTime DataHoraInicio { get; private set; }
+        public DateTime DataHoraFim { get; set; }
         public StatusReserva Status { get; private set; }
         public string? TokenConfirmacao { get; private set; }
      
@@ -17,23 +18,25 @@ namespace GerenciadorReservas.Domain.Entities
        
         private Reserva() { } 
        
-        public Reserva(int salaId, int usuarioId, DateTime dataHora)
+        public Reserva(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim)
         {
-            ValidateDomain(salaId, usuarioId, dataHora);
+            ValidateDomain(salaId, usuarioId, dataHoraInicio, dataHoraFim);
 
             UsuarioId = usuarioId;
             SalaId = salaId;
-            DataHora = dataHora;
-            
+            DataHoraInicio = dataHoraInicio;
+            DataHoraFim = dataHoraFim;
+
         }
 
-        private static void ValidateDomain(int salaId, int usuarioId, DateTime dataHora)
+        private static void ValidateDomain(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim)
         {
             DomainExceptionValidation.When(usuarioId <= 0, "Usuário inválido. O Usuário é obrigatório.");
             
             DomainExceptionValidation.When(salaId <= 0, "Sala inválida. A Sala é obrigatória.");
            
-            DomainExceptionValidation.When(dataHora == DateTime.MinValue, "Data e hora inicial inválida. A Data e hora inicial é obrigatória.");
+            DomainExceptionValidation.When(dataHoraInicio == DateTime.MinValue, "Data e hora inicial inválida. A Data e hora inicial é obrigatória.");
+            DomainExceptionValidation.When(dataHoraFim <= dataHoraInicio, "A data e hora final deve ser posterior à inicial.");
 
         }
 
@@ -44,7 +47,7 @@ namespace GerenciadorReservas.Domain.Entities
 
         public void Cancelar()
         {
-            if ((DataHora - DateTime.Now).TotalHours < 24)
+            if ((DataHoraInicio - DateTime.Now).TotalHours < 24)
             {
                throw new DomainExceptionValidation("Não é possível cancelar a reserva com menos de 24 horas de antecedência.");
             }

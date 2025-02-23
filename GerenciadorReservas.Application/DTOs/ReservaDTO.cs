@@ -13,7 +13,8 @@ namespace GerenciadorReservas.Application.DTOs
 
         [MinHoursBeforeReservation(24)]
         [FutureDateOnly]
-        public DateTime DataHora { get; set; }
+        public DateTime DataHoraInicio { get; set; }
+        public DateTime DataHoraFim { get; set; }
 
         [ValidEnumValue(typeof(StatusReserva))]
         public StatusReserva Status { get; set; }
