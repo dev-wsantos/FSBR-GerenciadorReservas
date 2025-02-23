@@ -8,24 +8,24 @@ namespace GerenciadorReservas.Application.Services
 {
     public class SalaService : ISalaService
     {
-        private readonly ISalaRepository _salaRepository;
+        private readonly IUnitOfWork _unitOfWork;
+      
         private readonly IMapper _mapper;
 
-        public SalaService(ISalaRepository salaRepository, IMapper mapper)
+        public SalaService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _salaRepository = salaRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<IEnumerable<SalaDTO>> GetSalas()
         {
-            var salaEntity = await _salaRepository.GetAllAsync();
-
+            var salaEntity = await _unitOfWork.SalaRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<SalaDTO>>(salaEntity);
         }
 
         public async Task<SalaDTO> GetSala(int? id)
         {
-            var salaEntity = await _salaRepository.GetByIdAsync(id);
+            var salaEntity = await _unitOfWork.SalaRepository.GetByIdAsync(id);
 
             return _mapper.Map<SalaDTO>(salaEntity);
         }
@@ -34,19 +34,19 @@ namespace GerenciadorReservas.Application.Services
         public async Task Add(SalaDTO sala)
         {
             var salaEntity = _mapper.Map<Sala>(sala);
-            await _salaRepository.CreateAsync(salaEntity);
+            await _unitOfWork.SalaRepository.CreateAsync(salaEntity);
         }
 
         public async Task Update(SalaDTO sala)
         {
             var salaEntity = _mapper.Map<Sala>(sala);
-            await _salaRepository.UpdateAsync(salaEntity);
+            await _unitOfWork.SalaRepository.UpdateAsync(salaEntity);
         }
 
         public async Task Remove(int? id)
         {
-            var salaEntity = _salaRepository.GetByIdAsync(id).Result;
-            await _salaRepository.RemoveAsync(salaEntity);
+            var salaEntity = _unitOfWork.SalaRepository.GetByIdAsync(id).Result;
+            await _unitOfWork.SalaRepository.RemoveAsync(salaEntity);
         }
     }
 }

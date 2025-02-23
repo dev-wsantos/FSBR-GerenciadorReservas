@@ -36,7 +36,7 @@ namespace GerenciadorReservas.API.Controllers
         public async Task<ActionResult<SalaDTO>> AdicionarSala(SalaDTO sala)
         {
             await _salaService.Add(sala);
-            return CreatedAtAction("GetSala", new { id = sala.Id }, sala);
+            return CreatedAtAction("ObterSala", new { id = sala.Id }, sala);
         }
 
         [HttpPut("AtualizarSala/{id}")]

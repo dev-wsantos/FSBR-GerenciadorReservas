@@ -1,4 +1,5 @@
 ﻿using GerenciadorReservas.Domain.Entities;
+using GerenciadorReservas.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,15 @@ namespace GerenciadorReservas.Domain.Interfaces
 {
     public interface IReservaRepository
     {
-        Task<IEnumerable<Reserva>> GetAllAsync();
-        Task<Reserva> GetByIdAsync(int? id);
-        Task<Reserva> CreateAsync(Reserva reserva);
-        Task<Reserva> UpdateAsync(Reserva reserva);
-        Task<Reserva> RemoveAsync(Reserva reserva);
+        Task<List<Reserva>> ObterTodasReservasAsync();
+        Task<Reserva> ObterPorIdAsync(int? id);
+        Task<List<Reserva>> ObterReservasPorSalaAsync(int salaId, DateTime data);
+        Task<List<Reserva>> ObterReservasPorUsuarioAsync(int usuarioId);
+        Task AtualizarStatusReservaAsync(int reservaId, StatusReserva status);
+        Task<bool> VerificarConflitoReservaAsync(int salaId, DateTime dataHoraReserva);
+        Task<List<Reserva>> ObterReservasPorDataAsync(DateTime data);
+        Task AdicionarAsync(Reserva reserva);
+        Task AtualizarAsync(Reserva reserva);
+
     }
 }

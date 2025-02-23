@@ -8,24 +8,24 @@ namespace GerenciadorReservas.Application.Services
 {
     public class UsuarioService : IUsuarioService
     {
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         private readonly IMapper _mapper;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public UsuarioService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _usuarioRepository = usuarioRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         public async Task<IEnumerable<UsuarioDTO>> GetUsuarios()
         {
-            var usuarios = await _usuarioRepository.GetAllAsync();
+            var usuarios = await _unitOfWork.UsuarioRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<UsuarioDTO>>(usuarios);
         }
 
         public async Task<UsuarioDTO> GetUsuario(int? id)
         {
-            var usuarioEntity = await _usuarioRepository.GetByIdAsync(id);
+            var usuarioEntity = await _unitOfWork.UsuarioRepository.GetByIdAsync(id);
             return _mapper.Map<UsuarioDTO>(usuarioEntity);
 
         }
@@ -34,19 +34,19 @@ namespace GerenciadorReservas.Application.Services
         public async Task Add(UsuarioDTO usuario)
         {
             var usuarioEntity = _mapper.Map<Usuario>(usuario);
-            await _usuarioRepository.CreateAsync(usuarioEntity);
+            await _unitOfWork.UsuarioRepository.CreateAsync(usuarioEntity);
         }
 
         public async Task Update(UsuarioDTO usuario)
         {
            var usuarioEntity = _mapper.Map<Usuario>(usuario);
-           await _usuarioRepository.UpdateAsync(usuarioEntity);
+           await _unitOfWork.UsuarioRepository.UpdateAsync(usuarioEntity);
         }
 
         public async Task Remove(int? id)
         {
-            var usuarioEntity = _usuarioRepository.GetByIdAsync(id).Result;
-            await _usuarioRepository.RemoveAsync(usuarioEntity);
+            var usuarioEntity = _unitOfWork.UsuarioRepository.GetByIdAsync(id).Result;
+            await _unitOfWork.UsuarioRepository.RemoveAsync(usuarioEntity);
         }
     }
 }

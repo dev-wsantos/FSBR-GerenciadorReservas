@@ -15,12 +15,16 @@ namespace GerenciadorReservas.API.Controllers
         {
             _reservaService = reservaService;
         }
+
         [HttpGet("ListarReservas")]
         public async Task<ActionResult<IEnumerable<ReservaDTO>>> ListarReservas()
         {
-            var reservas = await _reservaService.GetReservas();
+            var reservas = await _reservaService.GetReservasAsync();
+
             return Ok(reservas);
         }
+
+
         [HttpGet("ObterReserva/{id}")]
         public async Task<ActionResult<ReservaDTO>> ObterReserva(int? id)
         {
@@ -28,13 +32,15 @@ namespace GerenciadorReservas.API.Controllers
             {
                 return BadRequest();
             }
-            var reserva = await _reservaService.GetReserva(id);
+            var reserva = await _reservaService.GetReservaAsync(id);
             if (reserva == null)
             {
                 return NotFound();
             }
             return Ok(reserva);
         }
+        
+        
         [HttpPost("AdicionarReserva")]
         public async Task<ActionResult<ReservaDTO>> AdicionarReserva(ReservaDTO reserva)
         {
@@ -42,34 +48,34 @@ namespace GerenciadorReservas.API.Controllers
             {
                 return BadRequest();
             }
-            await _reservaService.Add(reserva);
-            return CreatedAtAction("GetReserva", new { id = reserva.Id }, reserva);
+            await _reservaService.CriarReservaAsync(reserva);
+            return CreatedAtAction("ObterReserva", new { id = reserva.Id }, reserva);
         }
-        [HttpPut("AtualizarReserva/{id}")]
-        public async Task<ActionResult<ReservaDTO>> AtualizarUsuario(int id, ReservaDTO reserva)
+
+
+
+        [HttpPut("EditarReserva/{id}")]
+        public async Task<ActionResult> EditarReserva(int id, ReservaDTO reserva)
         {
             if (id != reserva.Id)
             {
                 return BadRequest();
             }
-            await _reservaService.Update(reserva);
-
-            return Ok(reserva);
-        }
-        [HttpDelete("RemoverReserva/{id}")]
-        public async Task<ActionResult<ReservaDTO>> RemoverReserva(int? id)
-        {
-            if (id == null)
-            {
-                return BadRequest();
-            }
-            var reserva = await _reservaService.GetReserva(id);
-            if (reserva == null)
-            {
+            var resultado = await _reservaService.EditarReservaAsync(id, reserva);
+            if (resultado is null)
                 return NotFound();
-            }
-            await _reservaService.Remove(id);
-            return Ok(reserva);
+
+            return NoContent(); 
+        }
+
+        [HttpPatch("CancelarReserva/{id}")]
+        public async Task<ActionResult> CancelarReserva(int id)
+        {
+            var resultado = await _reservaService.CancelarReservaAsync(id);
+            if (resultado is null)
+                return NotFound();
+            
+            return NoContent();  // Retorna 204 No Content quando a reserva for cancelada com sucesso
         }
     }
 }

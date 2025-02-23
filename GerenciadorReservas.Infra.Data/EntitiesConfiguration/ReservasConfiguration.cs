@@ -20,6 +20,10 @@ namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
                    .HasConversion<int>() // Armazenando o enum como int
                    .IsRequired();
 
+            builder.Property(r => r.TokenConfirmacao)
+                     .HasMaxLength(255)
+                     .IsRequired(false);
+
             // Relacionamento com Sala
             builder.HasOne(r => r.Sala)
                    .WithMany(s => s.Reservas)
