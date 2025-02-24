@@ -1,0 +1,57 @@
+﻿@model GerenciadorReservas.UI.Web.Models.ReservaViewModel
+
+@{
+    ViewData["Title"] = "Criar Reserva";
+}
+
+<h1>Criar Reserva</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="UsuarioId" class="control-label"></label>
+                <select asp-for="UsuarioId" class="form-control" asp-items="Model.Usuarios">
+                    <option value="">Selecione o Usuário</option>
+                </select>
+                <span asp-validation-for="UsuarioId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="SalaId" class="control-label"></label>
+                <select asp-for="SalaId" class="form-control" asp-items="Model.Salas">
+                    <option value="">Selecione a Sala</option>
+                </select>
+                <span asp-validation-for="SalaId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataHoraInicio" class="control-label"></label>
+                <input asp-for="DataHoraInicio" class="form-control" type="datetime-local"
+                       value="@(Model.DataHoraInicio > DateTime.MinValue ? Model.DataHoraInicio.ToString("yyyy-MM-ddTHH:mm") : DateTime.Now.ToString("yyyy-MM-ddTHH:mm"))"
+                       min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                <span asp-validation-for="DataHoraInicio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DataHoraFim" class="control-label"></label>
+                <input asp-for="DataHoraFim" class="form-control" type="datetime-local"
+                       value="@(Model.DataHoraFim > DateTime.MinValue ? Model.DataHoraFim.ToString("yyyy-MM-ddTHH:mm") : DateTime.Now.AddHours(1).ToString("yyyy-MM-ddTHH:mm"))"
+                       min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                <span asp-validation-for="DataHoraFim" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Criar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

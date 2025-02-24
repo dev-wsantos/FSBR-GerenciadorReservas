@@ -1,30 +1,59 @@
 ﻿using GerenciadorReservas.Domain.Entities;
+using GerenciadorReservas.Domain.Enums;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace GerenciadorReservas.UI.Web.Models
 {
     public class ReservaViewModel
     {
         public int Id { get; set; }
+
+
+        [Required(ErrorMessage = "Selecione um usuário.")]
+        [Display(Name = "Nome do Usuário")]
+        public int UsuarioId { get; set; }
+  
         public Usuario? Usuario { get; set; }
+
+        [Required(ErrorMessage = "Selecione uma sala.")]
+        [Display(Name = "Nome da Sala")]
+        public int SalaId { get; set; }
+      
         public Sala? Sala { get; set; }
-        public DateTime DataHoraInicio { get; set; }
-        public DateTime DataHoraFim { get; set; }
 
-        public int StatusReservaId { get; set; }
-        public string StatusReserva
-        {
-            get
-            {
-                return StatusReservaId switch
-                {
-                    1 => "Confirmada",
-                    2 => "Cancelada",
-                    _ => "Desconhecido"
-                };
-            }
-        }
+        [Required(ErrorMessage = "A data de início é obrigatória.")]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data e Hora de Início")]
+       
+        public DateTime DataHoraInicio { get; set; } = DateTime.Now;
 
+        [Required(ErrorMessage = "A data de término é obrigatória.")]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Data e Hora de Fim")]
+        
+        public DateTime DataHoraFim { get; set; } = DateTime.Now.AddHours(1);
+
+       
+
+        public StatusReserva Status { get; set; }
+
+        [BindNever]
         public string NomeUsuario => Usuario?.Nome!;
+
+        [BindNever]
         public string NomeSala => Sala?.Nome!;
+
+
+        // Listas para o DropDownList
+        public List<SelectListItem> Usuarios { get; set; } = new();
+        public List<SelectListItem> Salas { get; set; } = new();
+
+        public ReservaViewModel()
+        {
+            DataHoraInicio = DateTime.Now;
+            DataHoraFim = DateTime.Now.AddHours(1); 
+        }
     }
 }

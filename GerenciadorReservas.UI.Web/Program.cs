@@ -1,6 +1,6 @@
-using GerenciadorReservas.Application.Interfaces;
-using GerenciadorReservas.Application.Services;
 using GerenciadorReservas.UI.Web.Services;
+using SalaService = GerenciadorReservas.UI.Web.Services.SalaService;
+using UsuarioService = GerenciadorReservas.UI.Web.Services.UsuarioService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<ReservasService>();
+builder.Services.AddScoped<SalaService>();
+builder.Services.AddScoped<UsuarioService>();
+
 
 
 builder.Services.AddControllersWithViews();

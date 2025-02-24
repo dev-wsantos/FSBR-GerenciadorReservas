@@ -13,27 +13,27 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                Id
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomeUsuario)
+               Nome do Usuário
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NomeSala)
+               Nome da Sala
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataHoraInicio)
+               Início
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataHoraFim)
+                Fim
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StatusReservaId)
+                Status
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StatusReserva)
-            </th>
-            <th></th>
+            
+            <td>
+                <b>Ações</b>
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -43,10 +43,10 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NomeUsuario)
+                @Html.DisplayFor(modelItem => item.Usuario.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NomeSala)
+                @Html.DisplayFor(modelItem => item.Sala.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataHoraInicio)
@@ -55,11 +55,9 @@
                 @Html.DisplayFor(modelItem => item.DataHoraFim)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StatusReservaId)
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusReserva)
-            </td>
+            
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

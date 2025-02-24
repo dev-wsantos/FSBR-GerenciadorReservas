@@ -20,5 +20,11 @@ namespace GerenciadorReservas.UI.Web.Services
         {
             return await _httpClient.GetFromJsonAsync<List<ReservaViewModel>>("https://localhost:7145/api/Reservas/ListarReservas");
         }
+
+        public async Task<bool> CreateReservaAsync(ReservaViewModel model)
+        {
+            var response = await _httpClient.PostAsJsonAsync("http://localhost:5107/api/Reservas/AdicionarReserva", model);
+            return response.IsSuccessStatusCode;
+        }
     }
 }
