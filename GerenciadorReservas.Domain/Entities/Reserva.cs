@@ -16,8 +16,20 @@ namespace GerenciadorReservas.Domain.Entities
      
 
        
-        private Reserva() { } 
-       
+        private Reserva() { }
+
+        public Reserva(int id, int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim, StatusReserva confirmada)
+        {
+            ValidateDomain(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+            Id = id;
+            UsuarioId = usuarioId;
+            SalaId = salaId;
+            DataHoraInicio = dataHoraInicio;
+            DataHoraFim = dataHoraFim;
+            Status = confirmada;
+
+        }
+
         public Reserva(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim, StatusReserva confirmada)
         {
             ValidateDomain(salaId, usuarioId, dataHoraInicio, dataHoraFim);
@@ -26,6 +38,7 @@ namespace GerenciadorReservas.Domain.Entities
             SalaId = salaId;
             DataHoraInicio = dataHoraInicio;
             DataHoraFim = dataHoraFim;
+            Status = confirmada;
 
         }
 

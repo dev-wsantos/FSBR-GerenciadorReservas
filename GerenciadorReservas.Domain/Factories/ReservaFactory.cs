@@ -15,7 +15,7 @@ namespace GerenciadorReservas.Domain.Factories
             if (dataHoraFim <= dataHoraInicio)
                 throw new DomainExceptionValidation("A data e hora de término deve ser maior que a de início.");
 
-            return new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+            return new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
         }
 
     }

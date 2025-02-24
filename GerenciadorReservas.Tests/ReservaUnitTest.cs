@@ -14,9 +14,10 @@ namespace GerenciadorReservas.Tests
             int usuarioId = 1;
             int salaId = 1;
             DateTime dataHoraInicio = DateTime.Now.AddHours(25);
-            DateTime dataHoraFim = dataHoraInicio.AddHours(2); // Exemplo: duração de 2 horas
+            DateTime dataHoraFim = dataHoraInicio.AddHours(2);
+            
 
-            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
 
             reserva.UsuarioId.Should().Be(usuarioId);
             reserva.SalaId.Should().Be(salaId);
@@ -33,7 +34,7 @@ namespace GerenciadorReservas.Tests
             DateTime dataHoraInicio = DateTime.Now.AddHours(24);
             DateTime dataHoraFim = dataHoraInicio.AddHours(2);
 
-            Action act = () => new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+            Action act = () => new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
 
             act.Should().Throw<DomainExceptionValidation>()
                .WithMessage("Usuário inválido. O Usuário é obrigatório.");
@@ -47,7 +48,7 @@ namespace GerenciadorReservas.Tests
             DateTime dataHoraInicio = DateTime.Now.AddHours(25);
             DateTime dataHoraFim = dataHoraInicio.AddHours(2);
 
-            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
 
             reserva.Cancelar();
 
@@ -62,7 +63,7 @@ namespace GerenciadorReservas.Tests
             DateTime dataHoraInicio = DateTime.Now.AddHours(23); // Menos de 24h de antecedência
             DateTime dataHoraFim = dataHoraInicio.AddHours(2);
 
-            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim);
+            var reserva = new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
 
             Action act = () => reserva.Cancelar();
 

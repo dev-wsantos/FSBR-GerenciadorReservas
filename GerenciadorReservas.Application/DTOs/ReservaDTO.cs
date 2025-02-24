@@ -18,5 +18,6 @@ namespace GerenciadorReservas.Application.DTOs
 
         [ValidEnumValue(typeof(StatusReserva))]
         public StatusReserva Status { get; set; }
+
     }
 }
