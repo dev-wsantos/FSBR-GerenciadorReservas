@@ -107,11 +107,28 @@ namespace GerenciadorReservas.Application.Services
         {
             var reserva = await _unitOfWork.ReservaRepository.ObterPorIdAsync(id);
 
+            var usuario = await _unitOfWork.UsuarioRepository.GetByIdAsync(reserva.UsuarioId);
+
+            var sala = await _unitOfWork.SalaRepository.GetByIdAsync(reserva.SalaId);
+
             if (reserva == null)
                 throw new InvalidOperationException("Reserva não encontrada");
 
 
-            return _mapper.Map<ReservaDTO>(reserva);
+            var reservaDetalhada = new ReservaDTO()
+            {
+                Id = reserva.Id,
+                UsuarioId = reserva.UsuarioId,
+                Usuario = usuario,
+                SalaId = reserva.SalaId,
+                Sala = sala,
+                DataHoraInicio = reserva.DataHoraInicio,
+                DataHoraFim = reserva.DataHoraFim,
+                Status = reserva.Status
+            };
+
+
+            return reservaDetalhada;
         }
 
         public async Task<IEnumerable<ReservaDTO>> GetReservasAsync()
