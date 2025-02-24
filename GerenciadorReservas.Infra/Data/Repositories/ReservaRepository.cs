@@ -114,9 +114,8 @@ namespace GerenciadorReservas.Infra.Data.Data.Repositories
                     (dataHoraInicio >= r.DataHoraInicio && dataHoraInicio < r.DataHoraFim) ||
                     (dataHoraFim > r.DataHoraInicio && dataHoraFim <= r.DataHoraFim) ||
                     (dataHoraInicio <= r.DataHoraInicio && dataHoraFim >= r.DataHoraFim)
-                ) &&
-                r.UsuarioId == usuarioId ||
-                r.UsuarioId != usuarioId
+                )
+                
             );
         }
 
