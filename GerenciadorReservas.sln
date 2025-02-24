@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.Domain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.Application", "GerenciadorReservas.Application\GerenciadorReservas.Application.csproj", "{8F20144B-4AEA-4DE1-AA4A-E4AC94302A56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.Infra.Data", "GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.Data.csproj", "{C1063E21-0B08-4103-9FE6-E060607C5B5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.Infra", "GerenciadorReservas.Infra\GerenciadorReservas.Infra.csproj", "{C1063E21-0B08-4103-9FE6-E060607C5B5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GerenciadorReservas.API", "GerenciadorReservas.API\GerenciadorReservas.API.csproj", "{A661D05C-30F5-4F44-80DB-FB30C4464072}"
 EndProject

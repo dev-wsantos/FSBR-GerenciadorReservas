@@ -18,7 +18,7 @@ namespace GerenciadorReservas.Domain.Entities
        
         private Reserva() { } 
        
-        public Reserva(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim)
+        public Reserva(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim, StatusReserva confirmada)
         {
             ValidateDomain(salaId, usuarioId, dataHoraInicio, dataHoraFim);
 

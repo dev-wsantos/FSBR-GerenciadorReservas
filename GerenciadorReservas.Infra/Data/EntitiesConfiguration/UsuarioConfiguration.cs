@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
+namespace GerenciadorReservas.Infra.Data.Data.EntitiesConfiguration
 {
     public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
     {

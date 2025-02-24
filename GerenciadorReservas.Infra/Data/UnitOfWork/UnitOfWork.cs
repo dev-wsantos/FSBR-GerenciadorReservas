@@ -1,7 +1,7 @@
 ﻿using GerenciadorReservas.Domain.Interfaces;
-using GerenciadorReservas.Infra.Data.Context;
+using GerenciadorReservas.Infra.Data.Data.Context;
 
-namespace GerenciadorReservas.Infra.Data.UnitOfWork
+namespace GerenciadorReservas.Infra.Data.Data.UnitOfWork
 {
     public class UnitOfWork : IUnitOfWork
     {

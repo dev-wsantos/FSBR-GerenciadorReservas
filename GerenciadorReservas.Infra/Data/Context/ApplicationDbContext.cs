@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GerenciadorReservas.Infra.Data.Context
+namespace GerenciadorReservas.Infra.Data.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {

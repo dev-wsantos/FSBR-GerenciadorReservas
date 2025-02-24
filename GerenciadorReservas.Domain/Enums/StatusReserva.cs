@@ -4,9 +4,6 @@ namespace GerenciadorReservas.Domain.Enums
 {
     public enum StatusReserva
     {
-        [Display(Name = "Aguardando Confirmação")]
-        AguardandoConfirmacao = 0,
-
         [Display(Name = "Confirmada")]
         Confirmada = 1,
 

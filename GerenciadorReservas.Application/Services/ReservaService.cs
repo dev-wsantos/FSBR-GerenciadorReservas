@@ -12,24 +12,43 @@ namespace GerenciadorReservas.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IReservaFactory _reservaFactory;
+        private readonly IEmailService _emailService;
 
-        public ReservaService(IUnitOfWork unitOfWork, IMapper mapper, IReservaFactory reservaFactory)
+        public ReservaService(IUnitOfWork unitOfWork, IMapper mapper, IReservaFactory reservaFactory, IEmailService emailService)
         {
 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _reservaFactory = reservaFactory;
+            _emailService = emailService;
         }
 
         public async Task<ReservaDTO> CancelarReservaAsync(int reservaId)
         {
             var reserva = await _unitOfWork.ReservaRepository.ObterPorIdAsync(reservaId);
+
             if (reserva == null)
                 throw new InvalidOperationException("Reserva não encontrada");
 
+
             reserva.Cancelar();
-            
+
             await _unitOfWork.ReservaRepository.AtualizarAsync(reserva);
+            await _unitOfWork.CommitAsync();
+
+            var usuario = await _unitOfWork.UsuarioRepository.GetByIdAsync(reserva.UsuarioId);
+
+            var sala = await _unitOfWork.SalaRepository.GetByIdAsync(reserva.SalaId);
+
+
+            await _emailService.EnviarConfirmacaoCancelamentoAsync(
+                usuario.Email!,
+                usuario.Nome!,
+                sala.Nome!,
+                reserva.DataHoraInicio,
+                reserva.DataHoraFim
+            );
+
 
             return _mapper.Map<ReservaDTO>(reserva);
         }
@@ -38,7 +57,28 @@ namespace GerenciadorReservas.Application.Services
         {
             var reserva = _reservaFactory.CriarReserva(reservaDto.SalaId, reservaDto.UsuarioId, reservaDto.DataHoraInicio, reservaDto.DataHoraFim);
 
+            var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reservaDto.UsuarioId, reserva.DataHoraInicio, reserva.DataHoraFim);
+
+            if (existeConflito)
+                throw new InvalidOperationException("Já existe uma reserva para a sala dentro desse período");
+
+
+            var usuario = await _unitOfWork.UsuarioRepository.GetByIdAsync(reserva.UsuarioId);
+
+            var sala = await _unitOfWork.SalaRepository.GetByIdAsync(reserva.SalaId);
+
             await _unitOfWork.ReservaRepository.AdicionarAsync(reserva);
+
+            await _unitOfWork.CommitAsync();
+
+          await _emailService.EnviarEmailConfirmacaoReservaAsync(
+                     usuario.Email!,
+                     usuario.Nome!,
+                     sala.Nome!,
+                     reserva.DataHoraInicio,
+                     reserva.DataHoraFim
+            );
+
 
             return _mapper.Map<ReservaDTO>(reserva);
         }
@@ -50,13 +90,15 @@ namespace GerenciadorReservas.Application.Services
             if (reservaExistente == null)
                 throw new InvalidOperationException("Reserva não encontrada");
 
-            var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reserva.DataHoraInicio, reserva.DataHoraFim);
+            var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reserva.UsuarioId, reserva.DataHoraInicio, reserva.DataHoraFim);
 
             if (existeConflito)
                 throw new InvalidOperationException("Já existe uma reserva para a sala no mesmo horário");
 
             var reservaEntity = _mapper.Map<Reserva>(reserva);
             await _unitOfWork.ReservaRepository.AtualizarAsync(reservaEntity);
+
+            await _unitOfWork.CommitAsync();
 
             return _mapper.Map<ReservaDTO>(reservaEntity);
         }
@@ -68,7 +110,7 @@ namespace GerenciadorReservas.Application.Services
             if (reserva == null)
                 throw new InvalidOperationException("Reserva não encontrada");
 
-           
+
             return _mapper.Map<ReservaDTO>(reserva);
         }
 

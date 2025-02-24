@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
-namespace GerenciadorReservas.Infra.Data.EntitiesConfiguration
+namespace GerenciadorReservas.Infra.Data.Data.EntitiesConfiguration
 {
     public class SalaConfiguration : IEntityTypeConfiguration<Sala>
     {

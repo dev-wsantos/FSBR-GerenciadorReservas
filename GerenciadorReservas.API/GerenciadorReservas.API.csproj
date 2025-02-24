@@ -7,12 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.29.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GerenciadorReservas.Application\GerenciadorReservas.Application.csproj" />
-    <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.Data.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.csproj" />
     <ProjectReference Include="..\GerenciadorReservas.Infra.IoC\GerenciadorReservas.Infra.IoC.csproj" />
   </ItemGroup>
 

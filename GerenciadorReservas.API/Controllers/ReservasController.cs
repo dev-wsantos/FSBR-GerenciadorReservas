@@ -1,7 +1,5 @@
 ﻿using GerenciadorReservas.Application.DTOs;
 using GerenciadorReservas.Application.Interfaces;
-using GerenciadorReservas.Application.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorReservas.API.Controllers
@@ -75,7 +73,7 @@ namespace GerenciadorReservas.API.Controllers
             if (resultado is null)
                 return NotFound();
             
-            return NoContent();  // Retorna 204 No Content quando a reserva for cancelada com sucesso
+            return NoContent();  
         }
     }
 }

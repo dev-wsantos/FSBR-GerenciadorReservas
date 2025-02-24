@@ -16,7 +16,7 @@ namespace GerenciadorReservas.Domain.Interfaces
         Task<List<Reserva>> ObterReservasPorSalaAsync(int salaId, DateTime data);
         Task<List<Reserva>> ObterReservasPorUsuarioAsync(int usuarioId);
         Task AtualizarStatusReservaAsync(int reservaId, StatusReserva status);
-        Task<bool> VerificarConflitoReservaAsync(int salaId, DateTime dataHoraInicio, DateTime dataHoraFim);
+        Task<bool> VerificarConflitoReservaAsync(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim);
         Task<List<Reserva>> ObterReservasPorDataAsync(DateTime data);
         Task AdicionarAsync(Reserva reserva);
         Task AtualizarAsync(Reserva reserva);

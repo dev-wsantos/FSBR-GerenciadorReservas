@@ -1,10 +1,10 @@
 ﻿using GerenciadorReservas.Domain.Entities;
 using GerenciadorReservas.Domain.Enums;
 using GerenciadorReservas.Domain.Interfaces;
-using GerenciadorReservas.Infra.Data.Context;
+using GerenciadorReservas.Infra.Data.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace GerenciadorReservas.Infra.Data.Repositories
+namespace GerenciadorReservas.Infra.Data.Data.Repositories
 {
     public class ReservaRepository : IReservaRepository
     {
@@ -54,7 +54,7 @@ namespace GerenciadorReservas.Infra.Data.Repositories
                 .Where(r =>
                     r.DataHoraInicio.Date == data.Date ||  
                     r.DataHoraFim.Date == data.Date ||    
-                    (r.DataHoraInicio < data && r.DataHoraFim > data) 
+                    r.DataHoraInicio < data && r.DataHoraFim > data 
                 )
                 .ToListAsync();
         }
@@ -68,7 +68,7 @@ namespace GerenciadorReservas.Infra.Data.Repositories
                     r.SalaId == salaId &&
                     (r.DataHoraInicio.Date == data.Date ||
                      r.DataHoraFim.Date == data.Date ||
-                     (r.DataHoraInicio < data && r.DataHoraFim > data))
+                     r.DataHoraInicio < data && r.DataHoraFim > data)
                 )
                 .ToListAsync();
         }
@@ -100,13 +100,23 @@ namespace GerenciadorReservas.Infra.Data.Repositories
         }
 
 
-        public async Task<bool> VerificarConflitoReservaAsync(int salaId, DateTime dataHoraInicio, DateTime dataHoraFim)
+        public async Task<bool> VerificarConflitoReservaAsync(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim)
         {
+            
+            dataHoraInicio = dataHoraInicio.AddMilliseconds(-dataHoraInicio.Millisecond);
+            dataHoraFim = dataHoraFim.AddMilliseconds(-dataHoraFim.Millisecond);
+
             return await _reservaContext.Reservas.AnyAsync(r =>
                 r.SalaId == salaId &&
-               ((dataHoraInicio >= r.DataHoraInicio && dataHoraInicio < r.DataHoraFim) || 
-                (dataHoraFim > r.DataHoraInicio && dataHoraFim <= r.DataHoraFim) ||      
-                (dataHoraInicio <= r.DataHoraInicio && dataHoraFim >= r.DataHoraFim))    
+                r.Status == StatusReserva.Confirmada && 
+                (
+                    
+                    (dataHoraInicio >= r.DataHoraInicio && dataHoraInicio < r.DataHoraFim) ||
+                    (dataHoraFim > r.DataHoraInicio && dataHoraFim <= r.DataHoraFim) ||
+                    (dataHoraInicio <= r.DataHoraInicio && dataHoraFim >= r.DataHoraFim)
+                ) &&
+                r.UsuarioId == usuarioId ||
+                r.UsuarioId != usuarioId
             );
         }
 

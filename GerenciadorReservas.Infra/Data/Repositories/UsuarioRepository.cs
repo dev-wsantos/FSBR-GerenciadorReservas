@@ -1,9 +1,9 @@
 ﻿using GerenciadorReservas.Domain.Entities;
 using GerenciadorReservas.Domain.Interfaces;
-using GerenciadorReservas.Infra.Data.Context;
+using GerenciadorReservas.Infra.Data.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace GerenciadorReservas.Infra.Data.Repositories
+namespace GerenciadorReservas.Infra.Data.Data.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
