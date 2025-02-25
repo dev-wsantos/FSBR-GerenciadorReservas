@@ -3,6 +3,7 @@ using GerenciadorReservas.Application.DTOs;
 using GerenciadorReservas.Application.Interfaces;
 using GerenciadorReservas.Domain.Entities;
 using GerenciadorReservas.Domain.Interfaces;
+using GerenciadorReservas.Domain.Validation;
 
 namespace GerenciadorReservas.Application.Services
 {
@@ -55,32 +56,39 @@ namespace GerenciadorReservas.Application.Services
 
         public async Task<ReservaDTO> CriarReservaAsync(ReservaDTO reservaDto)
         {
-            var reserva = _reservaFactory.CriarReserva(reservaDto.SalaId, reservaDto.UsuarioId, reservaDto.DataHoraInicio, reservaDto.DataHoraFim);
 
-            var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reservaDto.UsuarioId, reserva.DataHoraInicio, reserva.DataHoraFim);
-
-            if (existeConflito)
-                throw new InvalidOperationException("Já existe uma reserva para a sala dentro desse período");
-
-
-            var usuario = await _unitOfWork.UsuarioRepository.GetByIdAsync(reserva.UsuarioId);
-
-            var sala = await _unitOfWork.SalaRepository.GetByIdAsync(reserva.SalaId);
-
-            await _unitOfWork.ReservaRepository.AdicionarAsync(reserva);
-
-            await _unitOfWork.CommitAsync();
-
-          await _emailService.EnviarEmailConfirmacaoReservaAsync(
-                     usuario.Email!,
-                     usuario.Nome!,
-                     sala.Nome!,
-                     reserva.DataHoraInicio,
-                     reserva.DataHoraFim
-            );
+            try
+            {
+                var reserva = _reservaFactory.CriarReserva(reservaDto.SalaId, reservaDto.UsuarioId, reservaDto.DataHoraInicio, reservaDto.DataHoraFim);
+                var existeConflito = await _unitOfWork.ReservaRepository.VerificarConflitoReservaAsync(reserva.SalaId, reservaDto.UsuarioId, reserva.DataHoraInicio, reserva.DataHoraFim);
+                
+                if (existeConflito)
+                    throw new ReservaException("Já existe uma reserva para a sala dentro desse período");
 
 
-            return _mapper.Map<ReservaDTO>(reserva);
+                var usuario = await _unitOfWork.UsuarioRepository.GetByIdAsync(reserva.UsuarioId);
+
+                var sala = await _unitOfWork.SalaRepository.GetByIdAsync(reserva.SalaId);
+
+                await _unitOfWork.ReservaRepository.AdicionarAsync(reserva);
+
+                await _unitOfWork.CommitAsync();
+
+                await _emailService.EnviarEmailConfirmacaoReservaAsync(
+                           usuario.Email!,
+                           usuario.Nome!,
+                           sala.Nome!,
+                           reserva.DataHoraInicio,
+                           reserva.DataHoraFim
+                  );
+                return _mapper.Map<ReservaDTO>(reserva);
+            }
+            catch (ReservaException)
+            {
+
+                throw;
+            }
+           
         }
 
         public async Task<ReservaDTO> EditarReservaAsync(int? id, ReservaDTO reserva)

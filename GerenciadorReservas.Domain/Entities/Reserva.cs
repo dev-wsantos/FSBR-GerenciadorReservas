@@ -49,6 +49,7 @@ namespace GerenciadorReservas.Domain.Entities
             DomainExceptionValidation.When(salaId <= 0, "Sala inválida. A Sala é obrigatória.");
            
             DomainExceptionValidation.When(dataHoraInicio == DateTime.MinValue, "Data e hora inicial inválida. A Data e hora inicial é obrigatória.");
+            
             DomainExceptionValidation.When(dataHoraFim <= dataHoraInicio, "A data e hora final deve ser posterior à inicial.");
 
         }

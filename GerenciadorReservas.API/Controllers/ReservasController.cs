@@ -1,5 +1,6 @@
 ﻿using GerenciadorReservas.Application.DTOs;
 using GerenciadorReservas.Application.Interfaces;
+using GerenciadorReservas.Domain.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorReservas.API.Controllers
@@ -37,17 +38,25 @@ namespace GerenciadorReservas.API.Controllers
             }
             return Ok(reserva);
         }
-        
-        
+
+
         [HttpPost("AdicionarReserva")]
         public async Task<ActionResult<ReservaDTO>> AdicionarReserva(ReservaDTO reserva)
         {
-            if (reserva == null)
+
+            try
             {
-                return BadRequest();
+                await _reservaService.CriarReservaAsync(reserva);
+                return Ok(new { mensagem = "Reserva criada com sucesso!" });
             }
-            await _reservaService.CriarReservaAsync(reserva);
-            return CreatedAtAction("ObterReserva", new { id = reserva.Id }, reserva);
+            catch (DomainExceptionValidation ex)
+            {
+                return BadRequest(new { mensagem = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensagem = "Erro interno no servidor. Por favor, tente novamente." });
+            }
         }
 
 

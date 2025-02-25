@@ -9,13 +9,15 @@ namespace GerenciadorReservas.Domain.Factories
     {
         public Reserva CriarReserva(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim)
         {
-            if (dataHoraInicio < DateTime.Now)
-                throw new DomainExceptionValidation("Não é possível criar uma reserva para uma data passada.");
+            try
+            {
+               return new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
+            }
+            catch (DomainExceptionValidation ex)
+            {
 
-            if (dataHoraFim <= dataHoraInicio)
-                throw new DomainExceptionValidation("A data e hora de término deve ser maior que a de início.");
-
-            return new Reserva(salaId, usuarioId, dataHoraInicio, dataHoraFim, StatusReserva.Confirmada);
+                throw new ReservaException($"Erro ao criar a reserva: {ex.Message}");
+            }            
         }
 
     }

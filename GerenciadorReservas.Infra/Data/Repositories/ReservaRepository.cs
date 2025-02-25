@@ -102,7 +102,8 @@ namespace GerenciadorReservas.Infra.Data.Data.Repositories
 
         public async Task<bool> VerificarConflitoReservaAsync(int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim)
         {
-            
+
+
             dataHoraInicio = dataHoraInicio.AddMilliseconds(-dataHoraInicio.Millisecond);
             dataHoraFim = dataHoraFim.AddMilliseconds(-dataHoraFim.Millisecond);
 
