@@ -41,14 +41,14 @@ namespace GerenciadorReservas.Application.Services
 
             var sala = await _unitOfWork.SalaRepository.GetByIdAsync(reserva.SalaId);
 
-
-            await _emailService.EnviarConfirmacaoCancelamentoAsync(
-                usuario.Email!,
-                usuario.Nome!,
-                sala.Nome!,
-                reserva.DataHoraInicio,
-                reserva.DataHoraFim
-            );
+            // Temporariamente desabilitado por conta da api-key não poder ficar exposta
+            //await _emailService.EnviarConfirmacaoCancelamentoAsync(
+            //    usuario.Email!,
+            //    usuario.Nome!,
+            //    sala.Nome!,
+            //    reserva.DataHoraInicio,
+            //    reserva.DataHoraFim
+            //);
 
 
             return _mapper.Map<ReservaDTO>(reserva);

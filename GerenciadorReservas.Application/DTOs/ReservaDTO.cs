@@ -30,6 +30,7 @@ namespace GerenciadorReservas.Application.DTOs
         [DataType(DataType.DateTime)]
         [Display(Name = "Data e Hora de Fim")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-ddTHH:mm}")]
+        [DateAfter("DataHoraInicio", ErrorMessage = "A data de término deve ser maior do que a data de início.")]
         public DateTime DataHoraFim { get; set; }
 
         public StatusReserva Status { get; set; }

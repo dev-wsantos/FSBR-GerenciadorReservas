@@ -1,5 +1,4 @@
 using GerenciadorReservas.Infra.IoC;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -63,17 +63,8 @@ namespace GerenciadorReservas.UI.Web.Controllers
         {
             try
             {
-                //Console.WriteLine($"DataHoraInicio recebida: {reserva.DataHoraInicio}");
-                //Console.WriteLine($"DataHoraFim recebida: {reserva.DataHoraFim}");
-
-                //if (!ModelState.IsValid)
-                //{
-                //    Console.WriteLine("Erro de validação!");
-                //}
-
-
-
                 var success = await _reservasService.CreateReservaAsync(reserva);
+             
                 if (success)
                 {
                     return RedirectToAction("Index");

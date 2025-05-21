@@ -12,10 +12,6 @@ namespace GerenciadorReservas.Domain.Entities
         public DateTime DataHoraInicio { get; private set; }
         public DateTime DataHoraFim { get; set; }
         public StatusReserva Status { get; private set; }
-        public string? TokenConfirmacao { get; private set; }
-     
-
-       
         private Reserva() { }
 
         public Reserva(int id, int salaId, int usuarioId, DateTime dataHoraInicio, DateTime dataHoraFim, StatusReserva confirmada)

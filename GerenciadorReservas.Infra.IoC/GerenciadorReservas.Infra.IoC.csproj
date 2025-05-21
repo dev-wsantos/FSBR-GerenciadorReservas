@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GerenciadorReservas.Application\GerenciadorReservas.Application.csproj" />
     <ProjectReference Include="..\GerenciadorReservas.Domain\GerenciadorReservas.Domain.csproj" />
-    <ProjectReference Include="..\GerenciadorReservas.Infra.Data\GerenciadorReservas.Infra.csproj" />
+    <ProjectReference Include="..\GerenciadorReservas.Infra\GerenciadorReservas.Infra.csproj" />
     <ProjectReference Include="..\GerenciadorReservas.Infra\GerenciadorReservas.Infra.csproj" />
   </ItemGroup>
 

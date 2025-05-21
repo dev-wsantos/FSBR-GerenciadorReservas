@@ -12,16 +12,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            @* @if (!ViewData.ModelState.IsValid)
-            {
-                <div class="alert alert-danger">
-                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
-                    {
-                        <p>@error.ErrorMessage</p>
-                    }
-                </div>
-            }
- *@
+           
             <input type="hidden" asp-for="Status" value="1" />
 
             <div class="form-group">

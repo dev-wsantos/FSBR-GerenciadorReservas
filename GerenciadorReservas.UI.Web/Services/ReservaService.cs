@@ -28,7 +28,8 @@ namespace GerenciadorReservas.UI.Web.Services
 
         public async Task<List<ReservaViewModel>> ObterReservasAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<ReservaViewModel>>("https://localhost:7145/api/Reservas/ListarReservas");
+            var reservas = await _httpClient.GetFromJsonAsync<List<ReservaViewModel>>("https://localhost:7145/api/Reservas/ListarReservas");
+            return reservas ?? new List<ReservaViewModel>();
         }
 
 
@@ -53,12 +54,10 @@ namespace GerenciadorReservas.UI.Web.Services
             {
                 { "UsuarioId", model.UsuarioId },
                 { "SalaId", model.SalaId },
-                { "DataHoraInicio", model.DataHoraInicio },
+                { "DataHoraInicio", model.DataHoraInicio! },
                 { "DataHoraFim", model.DataHoraFim },
                 { "Status", model.Status }
             };
-
-            
 
             var json = JsonSerializer.Serialize(dtoDict);
             return new StringContent(json, Encoding.UTF8, "application/json");
@@ -66,7 +65,7 @@ namespace GerenciadorReservas.UI.Web.Services
 
         private async Task<HttpResponseMessage> SendRequestAsync(StringContent content)
         {
-            return await _httpClient.PostAsync("http://localhost:5107/api/Reservas/AdicionarReserva", content);
+            return await _httpClient.PostAsync("https://localhost:7145/api/Reservas/AdicionarReserva", content);
         }
 
         private async Task HandleErrorResponseAsync(HttpResponseMessage response)

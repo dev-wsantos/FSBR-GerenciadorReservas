@@ -22,11 +22,16 @@ namespace GerenciadorReservas.UI.Web.Services
             return await response.Content.ReadFromJsonAsync<List<UsuarioViewModel>>() ?? new List<UsuarioViewModel>();
         }
 
-        public async Task<Usuario?> GetUsuarioByIdAsync(int? id)
+        public async Task<Usuario> GetUsuarioByIdAsync(int? id)
         {
             var response = await _httpClient.GetAsync($"https://localhost:7145/api/Usuarios/ObterUsuario/{id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<Usuario>();
+            var usuario = await response.Content.ReadFromJsonAsync<Usuario>();
+            if (usuario == null)
+            {
+                throw new InvalidOperationException("Usuario não encontrado.");
+            }
+            return usuario;
         }
     }
 

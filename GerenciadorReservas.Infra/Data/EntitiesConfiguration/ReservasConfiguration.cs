@@ -24,10 +24,6 @@ namespace GerenciadorReservas.Infra.Data.Data.EntitiesConfiguration
                    .HasConversion<int>() 
                    .IsRequired();
 
-            builder.Property(r => r.TokenConfirmacao)
-                   .HasMaxLength(255)
-                   .IsRequired(false);
-
             // Relacionamento com Sala
             builder.HasOne(r => r.Sala)
                    .WithMany(s => s.Reservas)
